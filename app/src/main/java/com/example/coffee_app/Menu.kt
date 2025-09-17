@@ -11,13 +11,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -201,10 +207,19 @@ fun menu(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(30.dp))
 
+            val navBarPadding = WindowInsets.navigationBars.asPaddingValues()
 
-
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(20.dp)
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2), // 2 columns
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(
+                    start = 8.dp,
+                    end = 8.dp,
+                    top = 8.dp,
+                    bottom = 8.dp + navBarPadding.calculateBottomPadding()
+                ) , // outer padding
+                horizontalArrangement = Arrangement.spacedBy(8.dp), // column gap
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(lists){ itezm->
 
@@ -316,64 +331,7 @@ fun list(item:sqlist,navController: NavHostController) {
 
 
 
-        Column(
-            modifier = Modifier
-                .height(200.dp)
-                .width(160.dp)
-                .background(
-                    Color(0xFFE3D8D3),
-                    shape = RoundedCornerShape(10.dp)
-                )
-                .border(
-                    width = 1.dp,
-                    color = Color.Black,
-                    shape = RoundedCornerShape(15.dp)
-                )
-            ,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Image(
-                painter = painterResource(id = item.img), contentDescription = null,
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    .height(110.dp)
-                    .width(140.dp)
-            )
 
-            Text(
-                text = item.text,
-                color = Color(0xFF220C02),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 10.dp, top = 5.dp)
-            )
-
-
-            Spacer(modifier = Modifier.padding(5.dp))
-
-            Row(
-
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 10.dp, end = 10.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = item.price, fontSize = 17.sp, fontWeight = FontWeight.Bold)
-                Icon(
-                    imageVector = Icons.Default.AddCircle,
-                    contentDescription = null,
-                    Modifier.size(30.dp)
-                )
-            }
-
-        }
     }
 }
 

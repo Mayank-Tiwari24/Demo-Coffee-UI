@@ -301,10 +301,6 @@ fun coffeedetail(navController: NavHostController) {
 
                 }
 
-
-
-
-
             }
         }
 
